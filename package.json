@@ -14,7 +14,6 @@
     "@emotion/styled": "11.0.0",
     "color-variants": "1.0.1",
     "copy-to-clipboard": "3.3.1",
-    "emo": "1.1.2",
     "framer-motion": "2.9.4",
     "moment": "^2.29.1",
     "react": "17.0.0",
@@ -22,9 +21,6 @@
     "react-icons": "4.1.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.3"
-  },
-  "devDependencies": {
-    "typescript": "3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,5 +33,12 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-flowtype": "^5.2.0"
+  }
 }

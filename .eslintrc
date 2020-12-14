@@ -1,0 +1,26 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "global-require": 0,
+    "no-underscore-dangle": 0,
+    "class-methods-use-this": 0,
+    "import/default": "off",
+    "no-unused-vars": "error",
+    "no-undefined": "error",
+    "no-undef": "error",
+    "quotes": ["error", "double"],
+    "react/prop-types": 0
+  }
+}

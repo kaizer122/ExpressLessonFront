@@ -1,4 +1,4 @@
-import { Box, IconButton, Icon } from "@chakra-ui/react";
+import { Box, Icon, IconButton } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom";
@@ -23,7 +23,7 @@ const Header = () => {
       px={5}
     >
       <Link to="/" style={{ color: "white" }}>
-        Bootcamps
+        Home
       </Link>
       <IconButton
         variant={"link"}

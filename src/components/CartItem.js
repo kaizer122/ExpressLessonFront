@@ -1,25 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Box, Image, Flex, Button, IconButton } from "@chakra-ui/react";
-import { AddIcon, DeleteIcon, MinusIcon } from "@chakra-ui/icons";
+import { AddIcon, DeleteIcon, MinusIcon } from "@chakra-ui/icons"
+import { Box, Button, Flex, IconButton, Image } from "@chakra-ui/react"
+import React, { useContext, useEffect, useState } from "react"
+import { CartContext } from "../contexts/CartContext"
 
-import { CartContext } from "../contexts/CartContext";
 const CartItem = (product) => {
-  const { id, title, price, category, image } = product;
+  const { _id, name, price, category, imageUrl: image } = product
   const {
     cartItems,
     addProduct,
     removeProduct,
     increase,
-    decrease
-  } = useContext(CartContext);
-
-  const [quantity, setQuantity] = useState(0);
+    decrease,
+  } = useContext(CartContext)
+  const [quantity, setQuantity] = useState(0)
 
   useEffect(() => {
-    const index = cartItems.findIndex((item) => item.id === id);
-    if (index > -1) setQuantity(cartItems[index].quantity);
-    else if (quantity !== 0) setQuantity(0);
-  }, [cartItems, quantity, id]);
+    const index = cartItems.findIndex((item) => item._id === _id)
+    if (index > -1) setQuantity(cartItems[index].quantity)
+    else if (quantity !== 0) setQuantity(0)
+  }, [cartItems, quantity, _id])
 
   return (
     <Box
@@ -32,11 +31,11 @@ const CartItem = (product) => {
       d="flex"
       flexDirection="row"
       justifyContent="space-between"
-      key={id}
+      key={_id}
     >
       <Flex justifyContent="space-around">
         <Flex w="100px" align="start" mx="2">
-          <Image src={image} alt={title} />
+          <Image src={image} alt={name} />
         </Flex>
         <Flex justify="space-between" align="center" mx={2}>
           <Box
@@ -47,7 +46,7 @@ const CartItem = (product) => {
             textTransform="uppercase"
             mx="2"
           >
-            {category}
+            {category.name}
           </Box>
 
           <Box
@@ -59,7 +58,7 @@ const CartItem = (product) => {
             noOfLines={2}
             mx={2}
           >
-            {title}
+            {name}
           </Box>
         </Flex>
       </Flex>
@@ -90,7 +89,7 @@ const CartItem = (product) => {
         )}
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
-export default CartItem;
+export default React.memo(CartItem)

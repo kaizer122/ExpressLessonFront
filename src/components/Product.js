@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Box, Badge, Image, Flex, Button, IconButton } from "@chakra-ui/react";
-import { AddIcon, DeleteIcon, MinusIcon, StarIcon } from "@chakra-ui/icons";
+import { AddIcon, DeleteIcon, MinusIcon, StarIcon } from "@chakra-ui/icons"
+import { Box, Button, Flex, IconButton, Image } from "@chakra-ui/react"
+import React, { useContext, useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
+import { CartContext } from "../contexts/CartContext"
 
-import { CartContext } from "../contexts/CartContext";
-import { useHistory } from "react-router-dom";
 const Product = (product) => {
   const {
     _id: id,
@@ -12,23 +12,23 @@ const Product = (product) => {
     category,
     imageUrl: image,
     rating,
-  } = product;
+  } = product
   const {
     cartItems,
     addProduct,
     removeProduct,
     increase,
     decrease,
-  } = useContext(CartContext);
-  const history = useHistory();
+  } = useContext(CartContext)
+  const history = useHistory()
 
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(0)
 
   useEffect(() => {
-    const index = cartItems.findIndex((item) => item.id === id);
-    if (index > -1) setQuantity(cartItems[index].quantity);
-    else if (quantity !== 0) setQuantity(0);
-  }, [cartItems, quantity, id]);
+    const index = cartItems.findIndex((item) => item.id === id)
+    if (index > -1) setQuantity(cartItems[index].quantity)
+    else if (quantity !== 0) setQuantity(0)
+  }, [cartItems, quantity, id])
 
   return (
     <Box
@@ -37,10 +37,20 @@ const Product = (product) => {
       borderRadius="lg"
       overflow="hidden"
       boxShadow="sm"
-      onClick={() => history.push("/bootcamps/" + id)}
     >
-      <Flex justifyContent="center" alignItems="center">
-        <Image height="150px" src={image} alt={title} />
+      <Flex
+        justifyContent="center"
+        alignItems="center"
+        cursor="pointer"
+        onClick={() => history.push("/bootcamps/" + id)}
+      >
+        <Image
+          height="150px"
+          w="100%"
+          objectFit="cover"
+          src={image}
+          alt={title}
+        />
       </Flex>
       <Box p="6">
         <Box d="flex" alignItems="baseline">
@@ -62,6 +72,8 @@ const Product = (product) => {
           as="h4"
           lineHeight="tight"
           isTruncated
+          onClick={() => history.push("/bootcamps/" + id)}
+          cursor="pointer"
         >
           {title}
         </Box>
@@ -113,7 +125,7 @@ const Product = (product) => {
 */}
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default Product;
+export default Product

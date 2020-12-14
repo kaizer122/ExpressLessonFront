@@ -1,20 +1,19 @@
-import { Box, Skeleton } from "@chakra-ui/react";
-import React from "react";
-import { useParams } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
+import { Box, Flex } from "@chakra-ui/react"
+import React from "react"
+import BootcampBottomSection from "../components/BootcampDetail/BootcampBottomSection"
+import BootcampTopSection from "../components/BootcampDetail/BootcampTopSection"
 
 const ProductDetail = () => {
-  const { id } = useParams();
-  const { bootcamp, loading } = useFetch(
-    "http://localhost:5000/bootcamps/" + id
-  );
   return (
-    <Box h="full" w="full" mt={"5rem"}>
-      {!loading && <h1>{bootcamp.name}</h1>}
-    </Box>
-  );
-  if (loading) return <div>loading....</div>;
-  else return;
-};
+    <Flex h="full">
+      <Box h="full" w="15vw" bg="gray.200" />
+      <Box w="70vw" mt={"5rem"}>
+        <BootcampTopSection />
+        <BootcampBottomSection />
+      </Box>
+      <Box h="full" w="15vw" bg="gray.200" />
+    </Flex>
+  )
+}
 
-export default ProductDetail;
+export default ProductDetail

@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
-import { Box, Divider, Heading, Text, VStack } from "@chakra-ui/react";
-import { CartContext } from "../contexts/CartContext";
-import CartItem from "../components/CartItem";
+import { Box, Divider, Heading, Text, VStack } from "@chakra-ui/react"
+import React, { useContext } from "react"
+import CartItem from "../components/CartItem"
+import { CartContext } from "../contexts/CartContext"
 
 const Cart = () => {
-  const { cartItems, itemCount, total } = useContext(CartContext);
+  const { cartItems, itemCount, total } = useContext(CartContext)
   return (
     <VStack h="full" w="full" mt={"5rem"} spacing={2}>
       <Box w="full" textAlign="center" mb={6}>
@@ -14,7 +14,7 @@ const Cart = () => {
         Nombre d'items: <b>{itemCount} </b>
       </Box>
       {cartItems.map((prod) => (
-        <CartItem {...prod} key={prod.id} />
+        <CartItem {...prod} key={prod._id} />
       ))}
       <Box w="full" textAlign="right">
         <Divider />
@@ -23,7 +23,7 @@ const Cart = () => {
         </Text>
       </Box>
     </VStack>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart
