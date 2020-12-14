@@ -1,9 +1,9 @@
-import { Flex, Select } from "@chakra-ui/react"
-import React from "react"
+import { Flex, Select } from "@chakra-ui/react";
+import React from "react";
 
-const SelectFilter = ({ filterOptions, selectProps, setFilter, key }) => {
+const SelectFilter = ({ filterOptions, selectProps, setFilter }) => {
   return (
-    <Flex {...key}>
+    <Flex>
       <Select
         size="md"
         mr={4}
@@ -17,7 +17,7 @@ const SelectFilter = ({ filterOptions, selectProps, setFilter, key }) => {
         ))}
       </Select>
     </Flex>
-  )
-}
+  );
+};
 
-export default React.memo(SelectFilter)
+export default React.memo(SelectFilter);

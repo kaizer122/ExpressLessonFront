@@ -1,10 +1,23 @@
-import { Box, Icon, IconButton } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Icon,
+  IconButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom";
 import { CartContext } from "../contexts/CartContext";
+import { UserContext } from "../contexts/UserContext";
+
+import LoginModal from "./LoginModal";
 const Header = () => {
   const { itemCount } = useContext(CartContext);
+  const { isLoggedIn } = useContext(UserContext);
+  const { onOpen, ...modalprops } = useDisclosure();
   const history = useHistory();
   return (
     <Box
@@ -22,33 +35,45 @@ const Header = () => {
       alignItems="center"
       px={5}
     >
-      <Link to="/" style={{ color: "white" }}>
-        Home
-      </Link>
-      <IconButton
-        variant={"link"}
-        color="white"
-        icon={<Icon as={FaShoppingCart} fontSize="20px" />}
-        mx="2"
-        my="4"
-        onClick={() => history.push("/cart")}
-      />
-      <Box
-        position="absolute"
-        bg="red.500"
-        top={1}
-        right={7}
-        borderRadius="100%"
-        w="15px"
-        h="15px"
-        d="flex"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="xs"
-        color="white"
-      >
-        {itemCount}
-      </Box>
+      <HStack spacin={2}>
+        <Button variant="none" color="white" onClick={() => history.push("/")}>
+          {" "}
+          Home
+        </Button>
+      </HStack>
+      <HStack spacing={2}>
+        {!isLoggedIn && (
+          <Button variant="none" color="white" onClick={onOpen}>
+            {" "}
+            SignIn
+          </Button>
+        )}
+        <IconButton
+          variant={"link"}
+          color="white"
+          icon={<Icon as={FaShoppingCart} fontSize="20px" />}
+          onClick={() => history.push("/cart")}
+        />
+
+        <Box
+          position="absolute"
+          bg="red.500"
+          top={1}
+          right={7}
+          borderRadius="100%"
+          w="15px"
+          h="15px"
+          d="flex"
+          justifyContent="center"
+          alignItems="center"
+          fontSize="xs"
+          color="white"
+        >
+          {itemCount}
+        </Box>
+      </HStack>
+
+      <LoginModal {...modalprops} />
     </Box>
   );
 };

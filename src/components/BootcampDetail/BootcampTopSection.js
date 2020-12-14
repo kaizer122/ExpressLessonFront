@@ -1,4 +1,4 @@
-import { StarIcon } from "@chakra-ui/icons"
+import { StarIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -7,15 +7,17 @@ import {
   Heading,
   Skeleton,
   Text,
-} from "@chakra-ui/react"
-import React from "react"
-import { useParams } from "react-router-dom"
-import useFetch from "../../hooks/useFetch"
+} from "@chakra-ui/react";
+import React from "react";
+import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 
 const BootcampTopSection = () => {
-  const { id } = useParams()
-  const [bootcamp, loading] = useFetch("http://localhost:5000/bootcamps/" + id)
-  if (loading) return <Skeleton h="30vh" m="6" />
+  const { id } = useParams();
+  const [{ data: bootcamp }, loading] = useFetch(
+    "http://localhost:5000/bootcamps/" + id
+  );
+  if (loading) return <Skeleton h="30vh" m="6" />;
 
   return (
     <Box w="full">
@@ -70,7 +72,7 @@ const BootcampTopSection = () => {
         <Divider />
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default BootcampTopSection
+export default BootcampTopSection;
