@@ -1,34 +1,49 @@
-import React, { createContext, useReducer } from "react";
-import { CartReducer as UserReducer, sumItems } from "./CartReducer";
+import React, { createContext, useState } from "react"
 
-export const UserContext = createContext();
+export const UserContext = createContext()
 
 const storage = localStorage.getItem("user")
-  ? { isLoggedIn: true, user: JSON.parse(localStorage.getItem("user")) }
-  : { isLoggedIn: false, user: null };
+  ? {
+      isLoggedIn: true,
+      user: JSON.parse(localStorage.getItem("user")),
+      token: JSON.parse(localStorage.getItem("token")),
+    }
+  : { isLoggedIn: false, user: null, token: null }
 
 const UserContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(UserReducer, storage);
+  const [state, setState] = useState(storage)
 
   const login = (payload) => {
-    dispatch({ type: "LOGIN", payload });
-  };
+    localStorage.setItem("user", JSON.stringify(payload.data ?? null))
+    localStorage.setItem("token", JSON.stringify(payload.token ?? null))
+    setState({
+      isLoggedIn: true,
+      user: payload.data,
+      token: payload.token,
+    })
+  }
 
-  const logout = (payload) => {
-    dispatch({ type: "LOGOUT", payload });
-  };
+  const logout = () => {
+    localStorage.removeItem("user")
+    localStorage.removeItem("token")
+    setState({
+      isLoggedIn: false,
+      user: null,
+      token: null,
+    })
+  }
 
   const contextValues = {
     login,
     logout,
     ...state,
-  };
+  }
 
   return (
     <UserContext.Provider value={contextValues}>
       {children}
     </UserContext.Provider>
-  );
-};
+  )
+}
 
-export default UserContextProvider;
+export default UserContextProvider

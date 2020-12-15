@@ -1,24 +1,27 @@
 import {
+  Avatar,
   Box,
   Button,
   Flex,
   HStack,
   Icon,
   IconButton,
+  Text,
   useDisclosure,
-} from "@chakra-ui/react";
-import React, { useContext } from "react";
-import { FaShoppingCart } from "react-icons/fa";
-import { Link, useHistory } from "react-router-dom";
-import { CartContext } from "../contexts/CartContext";
-import { UserContext } from "../contexts/UserContext";
+} from "@chakra-ui/react"
+import React, { useContext } from "react"
+import { FaShoppingCart } from "react-icons/fa"
+import { useHistory } from "react-router-dom"
+import { CartContext } from "../contexts/CartContext"
+import { UserContext } from "../contexts/UserContext"
+import LoginModal from "./LoginModal"
 
-import LoginModal from "./LoginModal";
 const Header = () => {
-  const { itemCount } = useContext(CartContext);
-  const { isLoggedIn } = useContext(UserContext);
-  const { onOpen, ...modalprops } = useDisclosure();
-  const history = useHistory();
+  const { itemCount } = useContext(CartContext)
+  const { isLoggedIn, user, logout } = useContext(UserContext)
+  const { onOpen, ...modalprops } = useDisclosure()
+  const history = useHistory()
+
   return (
     <Box
       as="header"
@@ -42,11 +45,21 @@ const Header = () => {
         </Button>
       </HStack>
       <HStack spacing={2}>
-        {!isLoggedIn && (
+        {!isLoggedIn ? (
           <Button variant="none" color="white" onClick={onOpen}>
             {" "}
             SignIn
           </Button>
+        ) : (
+          <Flex align="center">
+            <Avatar src={user.avatar} mr={2} size="sm" />
+            <Text fontWeight={"semibold"} color="white" mr={2}>
+              {user.name}
+            </Text>
+            <Button variant="none" color="white" onClick={logout}>
+              SignOut
+            </Button>
+          </Flex>
         )}
         <IconButton
           variant={"link"}
@@ -75,6 +88,6 @@ const Header = () => {
 
       <LoginModal {...modalprops} />
     </Box>
-  );
-};
-export default Header;
+  )
+}
+export default Header

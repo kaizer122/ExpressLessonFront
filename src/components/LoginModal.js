@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   FormControl,
   FormLabel,
@@ -12,26 +11,37 @@ import {
   ModalHeader,
   ModalOverlay,
   useToast,
-} from "@chakra-ui/react";
-import React, { useState } from "react";
+} from "@chakra-ui/react"
+import React, { useContext, useState } from "react"
+import { UserContext } from "../contexts/UserContext"
 
 const LoginModal = ({ isOpen, onClose }) => {
-  const finalRef = React.useRef();
-  const initialRef = React.useRef();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const toast = useToast();
-  const login = () => {
-    let formdata = new FormData();
-    formdata.append("email", email);
-    formdata.append("password", password);
+  const finalRef = React.useRef()
+  const initialRef = React.useRef()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const toast = useToast()
+  const { login } = useContext(UserContext)
+  const signin = () => {
+    let formdata = new FormData()
+    formdata.append("email", email)
+    formdata.append("password", password)
     fetch("http://localhost:5000/auth/login", {
       method: "POST",
       body: formdata,
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.success) {
+        if (res.success && res.data) {
+          toast({
+            title: "Connected",
+            description: `Welcome ${res.data.name}`,
+            status: "success",
+            duration: 4000,
+            isClosable: true,
+          })
+          login(res)
+          onClose()
         } else
           toast({
             title: "Error",
@@ -39,9 +49,9 @@ const LoginModal = ({ isOpen, onClose }) => {
             status: "error",
             duration: 4000,
             isClosable: true,
-          });
-      });
-  };
+          })
+      })
+  }
   return (
     <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -72,13 +82,13 @@ const LoginModal = ({ isOpen, onClose }) => {
           <Button mr={3} variant="outline" onClick={onClose}>
             Close
           </Button>
-          <Button variant="solid" colorScheme="green" onClick={login}>
+          <Button variant="solid" colorScheme="green" onClick={signin}>
             Sign In
           </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
-  );
-};
+  )
+}
 
-export default LoginModal;
+export default LoginModal

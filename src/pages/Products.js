@@ -1,24 +1,28 @@
-import { Box, Flex, SimpleGrid, Skeleton } from "@chakra-ui/react";
-import React, { useState } from "react";
-import PaginationBar from "../components/PaginationBar/PaginationBar";
-import Product from "../components/Product";
-import Searchbar from "../components/Searchbar";
-import SelectFilter from "../components/SelectFilter";
-import useFetch from "../hooks/useFetch";
-import usePagination from "../hooks/usePagination";
+import { Box, Flex, SimpleGrid, Skeleton } from "@chakra-ui/react"
+import React, { useEffect, useState } from "react"
+import PaginationBar from "../components/PaginationBar/PaginationBar"
+import Product from "../components/Product"
+import Searchbar from "../components/Searchbar"
+import SelectFilter from "../components/SelectFilter"
+import useFetch from "../hooks/useFetch"
+import usePagination from "../hooks/usePagination"
 
 const Products = () => {
+  const [maxCount, setmMaxCount] = useState(10)
   const { limit, skip, paginationProps } = usePagination({
-    maxCount: count ?? undefined,
-  });
-  const [category, setCategory] = useState("");
-  const [search, setSearch] = useState("");
+    maxCount: maxCount ?? 100,
+  })
+  const [category, setCategory] = useState("")
+  const [search, setSearch] = useState("")
   const [{ data: products, count }, loading] = useFetch(
     `http://localhost:5000/bootcamps?skip=${skip}&limit=${limit}&category=${category}&searchQuery=${search}`
-  );
+  )
   const [{ data: categories }, loadingCategories] = useFetch(
     "http://localhost:5000/categories"
-  );
+  )
+  useEffect(() => {
+    setmMaxCount(count)
+  }, [count])
 
   return (
     <Box mt={"4rem"}>
@@ -31,8 +35,8 @@ const Products = () => {
       >
         <Searchbar
           setSearch={(v) => {
-            console.log("okokoko");
-            setSearch(v);
+            console.log("okokoko")
+            setSearch(v)
           }}
         />
         {!loadingCategories && (
@@ -67,7 +71,7 @@ const Products = () => {
             products.map((prod) => <Product {...prod} key={prod.id} />)}
       </SimpleGrid>
     </Box>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products
